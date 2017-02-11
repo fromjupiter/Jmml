@@ -15,6 +15,7 @@ import mml.tools.core.event.*;
  * An mml track is composed by a note sequence.
  */
 public class MmlSubtrack implements Iterable<MmlEvent>{
+	
 	List<MmlEvent> eventList;
 	int tickPerBeat = 16;
 	//can only get instance from factory method
@@ -48,6 +49,7 @@ public class MmlSubtrack implements Iterable<MmlEvent>{
 	public static MmlSubtrack newInstance(){
 		return new MmlSubtrack();
 	}
+	
 	public static final MmlSubtrack newInstance(String trackStr) throws InvalidMmlEventException{
 		MmlSubtrack result = new MmlSubtrack();
 		
