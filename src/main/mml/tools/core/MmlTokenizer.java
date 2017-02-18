@@ -1,5 +1,7 @@
 package mml.tools.core;
 
+import mml.tools.util.MmlUtils;
+
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,7 +23,7 @@ public final class MmlTokenizer implements Iterator<String> {
 	private Matcher match;
 	protected MmlTokenizer(String mmlText) {
 		this.mmlText = mmlText.toUpperCase().replaceAll("[ \\t\\r\\n]","");
-		match = MmlHelper.TOKENPATTERN.matcher(this.mmlText);
+		match = MmlUtils.TOKENPATTERN.matcher(this.mmlText);
 	}
 	public static MmlTokenizer newInstance(String text){
 		return new MmlTokenizer(text);
@@ -31,7 +33,7 @@ public final class MmlTokenizer implements Iterator<String> {
 	 * Reset to the start of text.
 	 */
 	public void reset(){
-		match = MmlHelper.TOKENPATTERN.matcher(this.mmlText);
+		match = MmlUtils.TOKENPATTERN.matcher(this.mmlText);
 	}
 	
 	@Override

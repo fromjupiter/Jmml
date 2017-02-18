@@ -1,23 +1,15 @@
 package mml.tools;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Iterator;
-
-import javax.sound.midi.InvalidMidiDataException;
-import javax.sound.midi.MetaMessage;
-import javax.sound.midi.MidiEvent;
-import javax.sound.midi.MidiSystem;
-import javax.sound.midi.MidiUnavailableException;
-import javax.sound.midi.Sequence;
-import javax.sound.midi.ShortMessage;
-import javax.sound.midi.Track;
-
 import mml.tools.core.MmlSubtrack;
 import mml.tools.core.MmlTrack;
 import mml.tools.core.event.MmlEvent;
 import mml.tools.core.event.MmlMetaEvent;
 import mml.tools.core.event.MmlNoteEvent;
+
+import javax.sound.midi.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
 
 public class MmlMidiBuilder {
 	private Sequence sequence;
@@ -48,13 +40,13 @@ public class MmlMidiBuilder {
 		//choose channel
 		int nChannel;
 		if(mmlTrack.isPercussive()){
-			nChannel = 10;
+			nChannel = BuilderConstants.MIDI_PERCUSSION_TRACK;
 		}else{
 			//normal instrument don't use channel 10.
 			do{
 			nChannel = nextChannel++;
-			}while(nChannel==10);
-			if(nChannel>15){
+			}while(nChannel== BuilderConstants.MIDI_PERCUSSION_TRACK);
+			if(nChannel>BuilderConstants.MIDI_MAX_TRACKS){
 				throw new MidiUnavailableException("No available channels.");
 			}
 		}

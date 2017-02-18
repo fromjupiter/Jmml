@@ -1,12 +1,16 @@
 package mml.tools.core;
 
+import mml.tools.core.event.InvalidMmlEventException;
+import mml.tools.core.event.MmlEvent;
+import mml.tools.core.event.MmlEventBuilder;
+import mml.tools.core.event.MmlNoteEvent;
+import mml.tools.util.MmlUtils;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import mml.tools.core.event.*;
 
 /***
  * 
@@ -60,7 +64,7 @@ public class MmlSubtrack implements Iterable<MmlEvent>{
 		 * i.e. We trigger an 'l4' event.
 		 */
 		int tickPerBeat = tokenizer.calculateTickPerBeat();
-		eventBuilder.setTick(MmlHelper.convertDenominatorToTick(tickPerBeat,4,false));
+		eventBuilder.setTick(MmlUtils.convertDenominatorToTick(tickPerBeat,4,false));
 		result.tickPerBeat=tickPerBeat;
 		
 		MmlNoteEvent lastNote = null;
@@ -83,7 +87,7 @@ public class MmlSubtrack implements Iterable<MmlEvent>{
 				}else if(token.equals(">")){
 					eventBuilder.setOctave(eventBuilder.getOctave()+1);
 				}else{
-					Pattern p = MmlHelper.NOTEPATTERN;
+					Pattern p = MmlUtils.NOTEPATTERN;
 					Matcher m = p.matcher(token);
 					if(m.find()){
 						//note event
@@ -103,7 +107,7 @@ public class MmlSubtrack implements Iterable<MmlEvent>{
 									&&denominator!=32 && denominator!=64 && denominator!=128)
 								throw new IllegalArgumentException("Note length can't be "+denominatorStr);
 							
-							worker=worker.copyAndSetTick(MmlHelper.convertDenominatorToTick(tickPerBeat, denominator));
+							worker=worker.copyAndSetTick(MmlUtils.convertDenominatorToTick(tickPerBeat, denominator));
 						}
 						//dot condition must be judged after denominator because dot will time tick value by 1.5
 						if(hasDot){
@@ -116,7 +120,7 @@ public class MmlSubtrack implements Iterable<MmlEvent>{
 						}
 					}else{
 						//Or meta event
-						p = MmlHelper.METAPATTERN;
+						p = MmlUtils.METAPATTERN;
 						m = p.matcher(token);
 						if(m.find()){
 							String metaStr = m.group(1);
@@ -127,7 +131,7 @@ public class MmlSubtrack implements Iterable<MmlEvent>{
 							}else if(metaStr.equals("O")){
 								result.addEvent(eventBuilder.setOctave(arg).makeMeta("O", arg));
 							}else if(metaStr.equals("L")){
-								result.addEvent(eventBuilder.setTick(MmlHelper.convertDenominatorToTick(tickPerBeat,arg,hasDot)).makeMeta("L", arg));
+								result.addEvent(eventBuilder.setTick(MmlUtils.convertDenominatorToTick(tickPerBeat,arg,hasDot)).makeMeta("L", arg));
 							}else if(metaStr.equals("T")){
 								result.addEvent(eventBuilder.makeMeta("T", arg));
 							}else if(metaStr.equals("N")){

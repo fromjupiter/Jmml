@@ -1,6 +1,7 @@
 package mml.tools.core.event;
 
-import mml.tools.core.event.attributes.*;
+import mml.tools.core.event.attributes.MmlPitch;
+import mml.tools.core.event.attributes.MmlVolume;
 
 /**
  * The MmlNoteEvent class stands for an event that stands for a sound unit,a.k.a. note.
@@ -21,7 +22,6 @@ public class MmlNoteEvent implements MmlEvent{
 		this.tick= tick;
 		this.volume = new MmlVolume(volume);
 	}
-
 	public String toString(){
 		return this.pitch.toString()+tick;
 	}

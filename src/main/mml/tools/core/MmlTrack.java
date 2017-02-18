@@ -1,10 +1,10 @@
 package mml.tools.core;
 
+import mml.tools.core.event.InvalidMmlEventException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import mml.tools.core.event.InvalidMmlEventException;
 
 /**
  * This class stands for an mml track, which is the counterpart of midi track in mml world.
@@ -138,7 +138,14 @@ public class MmlTrack implements Iterable<MmlSubtrack>{
 	public static final MmlTrack newInstance(List<String> str_list) throws InvalidMmlEventException {
 		return MmlTrack.newInstance(str_list,false);
 	}
-	
+
+	public static final MmlTrack newInstance(Boolean percussion) throws InvalidMmlEventException {
+		return new MmlTrack(percussion);
+	}
+
+	public static final MmlTrack newInstance() throws InvalidMmlEventException {
+		return new MmlTrack(false);
+	}
 	@Override
 	public Iterator<MmlSubtrack> iterator() {
 		return subtracks.iterator();

@@ -1,11 +1,11 @@
-package mml.tools;
+package mml.tools.util;
+
+import mml.tools.core.MmlSubtrack;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-
-import mml.tools.core.MmlSubtrack;
+import java.util.stream.Collectors;
 
 public class MmlSubtrackPool {
 	
@@ -26,7 +26,7 @@ public class MmlSubtrackPool {
 	
 	List<PoolRecord> pool = new ArrayList<>();
 	
-	protected MmlSubtrackPool(){
+	public MmlSubtrackPool(){
 		
 	}
 	
@@ -59,7 +59,10 @@ public class MmlSubtrackPool {
 		}
 		return false;
 	}
-	
+
+	public List<MmlSubtrack> checkOutAll() {
+		return pool.stream().map(o -> o.getSubtrack()).collect(Collectors.toList());
+	}
 	public static MmlSubtrackPool newInstance(){
 		return new MmlSubtrackPool();
 	}

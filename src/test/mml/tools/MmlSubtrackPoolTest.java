@@ -1,10 +1,10 @@
 package mml.tools;
 
-import static org.junit.Assert.*;
-
+import mml.tools.core.MmlSubtrack;
+import mml.tools.util.MmlSubtrackPool;
 import org.junit.Test;
 
-import mml.tools.core.MmlSubtrack;
+import static org.junit.Assert.*;
 
 public class MmlSubtrackPoolTest {
 

@@ -21,6 +21,17 @@ public class MmlEventBuilder{
 	public static MmlEventBuilder newInstance(){
 		return new MmlEventBuilder();
 	}
+
+
+	public static MmlNoteEvent newNoteFromMidi(int midiKey, long midiTick, int midiVelocity) throws InvalidMmlEventException {
+		return new MmlNoteEvent(
+				MmlPitch.PitchStep.fromInt(midiKey%12),
+				Math.floorDiv(midiKey,12)-1,
+				midiTick,
+				Math.floorDiv(midiVelocity,8)
+		);
+	}
+
 	private MmlEventBuilder copy(){
 		MmlEventBuilder res = new MmlEventBuilder();
 		res.pitchStep = this.pitchStep;

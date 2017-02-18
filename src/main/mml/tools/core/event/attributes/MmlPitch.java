@@ -11,7 +11,7 @@ import mml.tools.core.event.InvalidMmlEventException;
  * @author Kexiang Feng
  */
 public final class MmlPitch {
-	public static enum PitchStep{
+	public enum PitchStep{
 		C (0), BSHARP(0),
 		CSHARP(1),DFLAT (1),
 		D(2),
@@ -27,8 +27,16 @@ public final class MmlPitch {
 		R(12)//Rest
 		;
 		private int value;
-		private PitchStep(int i){this.value = i;}
+		PitchStep(int i){this.value = i;}
 		public int toInt(){return value;}
+		public static PitchStep fromInt(int value){
+			PitchStep[] values = PitchStep.values();
+			for(int i=0;i<values.length;i++){
+				if(values[i].toInt() == value)
+					return values[i];
+			}
+			return null;
+		}
 	}
 	private int pitchOctave; //1-8
 	private PitchStep pitchStep; // 0-12
